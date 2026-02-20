@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CheckSquare, Square, DoorOpen, Star, Award } from 'lucide-react';
+import { CheckSquare, Square, DoorOpen, Star, Award, Car } from 'lucide-react';
+import HighwayCarGame from '@/components/HighwayCarGame';
 
 const tcClauses = [
   'All participants must register through the official AVIRBHAAV portal with valid institutional ID.',

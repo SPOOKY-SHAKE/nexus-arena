@@ -74,6 +74,7 @@ const TermsSlide = () => {
 };
 
 const SponsorsSlide = () => {
+  const [gameOpen, setGameOpen] = useState(false);
   const sponsors = {
     title: { name: 'PRESTIGE GLOBAL', tagline: 'Building Tomorrow\'s Justice' },
     platinum: [

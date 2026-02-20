@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CheckSquare, Square, DoorOpen, Star, Award } from 'lucide-react';
+import { CheckSquare, Square, DoorOpen, Star, Award, Car } from 'lucide-react';
+import HighwayCarGame from '@/components/HighwayCarGame';
 
 const tcClauses = [
   'All participants must register through the official AVIRBHAAV portal with valid institutional ID.',
@@ -73,6 +74,7 @@ const TermsSlide = () => {
 };
 
 const SponsorsSlide = () => {
+  const [gameOpen, setGameOpen] = useState(false);
   const sponsors = {
     title: { name: 'PRESTIGE GLOBAL', tagline: 'Building Tomorrow\'s Justice' },
     platinum: [
@@ -124,7 +126,7 @@ const SponsorsSlide = () => {
       </div>
 
       {/* Associates marquee */}
-      <div className="w-full max-w-lg overflow-hidden h-6">
+      <div className="w-full max-w-lg overflow-hidden h-6 mb-6">
         <div className="whitespace-nowrap" style={{ animation: 'tickerScroll 15s linear infinite' }}>
           {sponsors.associates.concat(sponsors.associates).map((name, i) => (
             <span key={i} className="font-cormorant text-xs text-muted-foreground mx-6">
@@ -133,6 +135,21 @@ const SponsorsSlide = () => {
           ))}
         </div>
       </div>
+
+      {/* Highway Game Button */}
+      <button
+        onClick={() => setGameOpen(true)}
+        className="interactive flex items-center gap-3 px-8 py-3 rounded-full font-cinzel text-xs tracking-[0.2em] text-primary-foreground"
+        style={{
+          background: 'linear-gradient(135deg, hsl(43, 51%, 54%), hsl(51, 100%, 50%))',
+          boxShadow: '0 0 20px hsla(43, 51%, 54%, 0.3)',
+        }}
+      >
+        <Car className="w-4 h-4" />
+        PLAY HIGHWAY DRIVE
+      </button>
+
+      <HighwayCarGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </div>
   );
 };

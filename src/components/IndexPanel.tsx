@@ -44,10 +44,12 @@ const indexItems: { title: string; items: IndexItem[] }[] = [
 const IndexPanel = () => {
   const { indexPanelOpen, setIndexPanelOpen, currentChapter } = useApp();
 
-  const handleNavigate = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
+  const handleNavigate = (id: string, chapter: number, slide: number) => {
+    if ((window as any).__avirbhavNavigate) {
+      (window as any).__avirbhavNavigate(chapter, slide);
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'start' });
     }
     setIndexPanelOpen(false);
   };
@@ -93,7 +95,7 @@ const IndexPanel = () => {
                   {chapter.items.map(item => (
                     <button
                       key={item.id}
-                      onClick={() => handleNavigate(item.id)}
+                      onClick={() => handleNavigate(item.id, item.chapter, item.slide)}
                       className={`interactive w-full text-left flex items-center gap-2 py-1.5 px-2 rounded text-sm font-cormorant transition-colors ${
                         currentChapter === item.chapter
                           ? 'text-accent'

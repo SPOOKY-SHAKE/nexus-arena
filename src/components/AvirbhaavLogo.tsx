@@ -1,8 +1,34 @@
+import { useState } from 'react';
+import { useDevAuth } from '@/hooks/useDevAuth';
+import { toast } from 'sonner';
+
 interface AvirbhaavLogoProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
 const AvirbhaavLogo = ({ size = 'md' }: AvirbhaavLogoProps) => {
+  const { login } = useDevAuth();
+  const [clickCount, setClickCount] = useState(0);
+
+  const handleLogoClick = () => {
+    const nextCount = clickCount + 1;
+    if (nextCount >= 5) {
+      setClickCount(0);
+      const pass = prompt('PROTECTED AREA: Enter Master Password to unlock Edit Mode');
+      if (pass) {
+        if (login(pass)) {
+          toast.success('Edit Mode UNLOCKED. You can now modify content in Chapters 3 & 4.');
+        } else {
+          toast.error('INVALID PASSWORD. Access Denied.');
+        }
+      }
+    } else {
+      setClickCount(nextCount);
+      // Reset count if no click for 2s
+      setTimeout(() => setClickCount(0), 2000);
+    }
+  };
+
   const sizeClasses = {
     sm: 'text-xl',
     md: 'text-4xl md:text-5xl',
@@ -10,7 +36,9 @@ const AvirbhaavLogo = ({ size = 'md' }: AvirbhaavLogoProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center" style={{ animation: 'glitchFlicker 4s ease-in-out infinite' }}>
+    <div className="flex flex-col items-center cursor-pointer" 
+      onClick={handleLogoClick}
+      style={{ animation: 'glitchFlicker 4s ease-in-out infinite' }}>
       {/* Flame crown */}
       <svg viewBox="0 0 100 40" className="w-16 md:w-24 mb-2 opacity-80">
         <defs>
@@ -26,10 +54,7 @@ const AvirbhaavLogo = ({ size = 'md' }: AvirbhaavLogoProps) => {
 
       {/* Main text */}
       <h1 className={`font-cinzel font-black ${sizeClasses[size]} golden-text tracking-[0.15em] leading-none`}
-        style={{
-          textShadow: '0 0 30px hsla(43, 51%, 54%, 0.3), 0 4px 8px hsla(218, 67%, 4%, 0.8)',
-          filter: 'drop-shadow(0 2px 4px hsla(25, 76%, 31%, 0.4))',
-        }}>
+        style={{ animation: 'glitchFlicker 6s ease-in-out infinite' }}>
         AVIRBHAAV
       </h1>
 

@@ -13,12 +13,43 @@ const HeroSlide = () => {
   }, []);
 
   return (
-    <div id="slide-1-0" className="slide flex items-center justify-center">
-      <div className={`text-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+    <div id="slide-1-0" className="slide flex items-center justify-center relative overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ filter: 'brightness(0.35) saturate(0.9) contrast(1.1)' }}
+      >
+        <source src="/hero-drone.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark Overlay for contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/60 z-1" />
+
+      <div className={`relative z-10 text-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        {/* Rotating mandala logo */}
+        <div className="relative flex items-center justify-center mb-4" style={{ height:'172px' }}>
+          {/* Outer pulse ring */}
+          <div className="absolute" style={{ width:'190px', height:'190px', borderRadius:'50%', 
+            border:'1px solid hsla(43,51%,54%,0.2)', animation:'pulseGlow 4s ease-in-out infinite' }} />
+          {/* Mandala rotates slowly */}
+          <div style={{ width:'158px', height:'158px', animation:'spinSlow 28s linear infinite' }}>
+            <img src="/avirbhav-logo.png" alt="AVIRBHAAV 2026" 
+              style={{ width:'100%', height:'100%', objectFit:'contain',
+                filter:'drop-shadow(0 0 22px hsla(43,51%,54%,0.7)) drop-shadow(0 0 44px hsla(33,100%,50%,0.3))' }} />
+          </div>
+          {/* Subtle static glow center */}
+          <div className="absolute" style={{ width:'60px', height:'60px', borderRadius:'50%', 
+            background:'radial-gradient(circle,hsla(43,51%,54%,0.15),transparent)',
+            pointerEvents:'none' }} />
+        </div>
         <AvirbhaavLogo size="lg" />
 
         <div className="mt-6 px-5 py-1.5 rounded-full border border-primary/30 inline-block"
-          style={{ background: 'hsla(43, 51%, 54%, 0.08)' }}>
+          style={{ background: 'hsla(43, 51%, 54%, 0.12)', backdropFilter: 'blur(8px)' }}>
           <span className="font-cinzel text-[10px] md:text-xs tracking-[0.2em] text-primary">
             NATIONAL UNIVERSITY OF STUDY AND RESEARCH IN LAW
           </span>
@@ -37,7 +68,7 @@ const HeroSlide = () => {
       {/* Audio toggle */}
       <button
         onClick={() => setAudioEnabled(!audioEnabled)}
-        className="interactive absolute top-14 right-4 text-primary/50 hover:text-primary transition-colors"
+        className="interactive absolute top-14 right-4 text-primary/50 hover:text-primary transition-colors z-20"
         aria-label="Toggle audio"
       >
         {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -92,14 +123,23 @@ const StandOutSlide = () => {
         ))}
       </div>
 
-      <button
-        className="interactive px-8 py-3 rounded-full font-cinzel text-xs tracking-[0.2em] text-primary-foreground relative overflow-hidden group"
+      <a
+        href="https://forms.google.com/AVIRBHAV-REGISTRATION-PLACEHOLDER"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="interactive inline-flex items-center gap-2 px-8 py-3 rounded-full font-cinzel text-xs tracking-[0.2em] text-primary-foreground relative overflow-hidden group"
         style={{ background: 'linear-gradient(135deg, hsl(43, 51%, 54%), hsl(51, 100%, 50%))' }}
       >
         <span className="relative z-10">BE PART OF HISTORY</span>
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ background: 'linear-gradient(135deg, hsl(51, 100%, 50%), hsl(43, 51%, 54%))' }} />
-      </button>
+        {/* Arrow icon */}
+        <svg className="relative z-10 w-3 h-3 transition-transform group-hover:translate-x-1" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0l8 8-8 8-1.4-1.4 5.6-5.6H0V7h12.2L6.6 1.4z"/>
+        </svg>
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: 'linear-gradient(135deg, hsl(51, 100%, 50%), hsl(43, 51%, 54%))' }}
+        />
+      </a>
     </div>
   );
 };
@@ -143,15 +183,42 @@ const ActivitiesSlide = () => {
 const LeaderSlide = () => (
   <div id="slide-1-3" className="slide flex items-center justify-center px-6">
     <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-[280px_1fr] gap-10 items-center">
-      {/* Portrait */}
+      {/* Portrait — replace existing portrait div */}
       <div className="flex flex-col items-center">
-        <div className="w-40 h-40 rounded-full border-2 border-primary/50 overflow-hidden relative"
-          style={{ boxShadow: '0 0 30px hsla(43, 51%, 54%, 0.2)' }}>
-          <img src="https://picsum.photos/seed/vc-portrait/200/200" alt="Vice Chancellor" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 rounded-full" style={{ boxShadow: 'inset 0 0 20px hsla(43, 51%, 54%, 0.15)' }} />
+        <div
+          className="relative overflow-hidden"
+          style={{
+            width: '220px',
+            height: '280px',
+            borderRadius: '12px',
+            border: '2px solid hsla(43,51%,54%,0.5)',
+            boxShadow: '0 0 40px hsla(43,51%,54%,0.2), 0 0 80px hsla(43,51%,54%,0.08)',
+          }}
+        >
+          <img
+            src="/vc-portrait.png"
+            alt="Vice Chancellor, NUSRL"
+            className="w-full h-full object-cover object-top"
+          />
+          {/* Gold shimmer overlay at bottom */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-16"
+            style={{
+              background: 'linear-gradient(0deg, hsla(218,67%,4%,0.7) 0%, transparent 100%)',
+            }}
+          />
         </div>
-        <p className="font-cinzel text-sm text-primary mt-4">Prof. Distinguished Name</p>
-        <p className="font-cormorant text-xs text-muted-foreground italic">Vice Chancellor, NUSRL</p>
+        <p className="font-cinzel text-sm text-primary mt-4 tracking-wider">
+          Prof. [Vice Chancellor Name]
+        </p>
+        <p className="font-cormorant text-xs text-muted-foreground italic">
+          Vice Chancellor, NUSRL Ranchi
+        </p>
+        {/* Gold divider line below name */}
+        <div
+          className="mt-3 w-24 h-[1px]"
+          style={{ background: 'linear-gradient(90deg, transparent, hsl(43,51%,54%), transparent)' }}
+        />
       </div>
 
       {/* Speech */}
@@ -159,21 +226,27 @@ const LeaderSlide = () => (
         <h2 className="font-cinzel text-sm md:text-base golden-text tracking-widest mb-6">
           FROM THE DESK OF THE VICE CHANCELLOR
         </h2>
-        <div className="max-h-[50vh] overflow-y-auto pr-4 space-y-4 font-cormorant text-foreground/80 italic leading-relaxed">
+        <div className="max-h-[50vh] overflow-y-auto pr-4 space-y-4 font-cormorant text-foreground/80 italic leading-relaxed text-base">
           <p>
-            "It is with great pride and immense honour that I welcome you to AVIRBHAAV — the crown jewel of our
-            university's cultural legacy. This event represents not merely a gathering of minds, but a convergence
-            of passion, intellect, and the unwavering spirit of legal scholarship."
+            "It is with great pride and immense honour that I welcome you to AVIRBHAAV —
+            the crown jewel of our university's cultural legacy. This event represents
+            not merely a gathering of minds, but a convergence of passion, intellect,
+            and the unwavering spirit of legal scholarship."
           </p>
           <p>
-            "At NUSRL, we believe that the pursuit of justice extends beyond the courtroom. Through AVIRBHAAV,
-            we create a space where future legal luminaries can express themselves through debate, art, sport,
-            and camaraderie."
+            "At NUSRL Ranchi, we believe the pursuit of justice extends beyond
+            the courtroom. Through AVIRBHAAV, we create a space where future legal
+            luminaries express themselves through debate, art, sport, and camaraderie —
+            because a great lawyer is also a great human being."
           </p>
           <p>
-            "I invite each of you to immerse yourselves fully in this experience — challenge conventions,
-            forge lasting bonds, and let your brilliance illuminate every corner of this magnificent celebration.
-            May AVIRBHAAV be the catalyst that transforms your aspirations into achievements."
+            "I invite each of you to immerse fully in this experience — challenge
+            conventions, forge lasting bonds, and let your brilliance illuminate
+            every corner of this magnificent celebration. May AVIRBHAAV be the
+            catalyst that transforms your aspirations into achievements."
+          </p>
+          <p className="not-italic text-primary/60 text-sm">
+            — With warm regards and highest expectations
           </p>
         </div>
         {/* Signature line */}

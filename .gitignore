@@ -6,17 +6,20 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+firebase-debug.log*
+firestore-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+/jdk/
+/node_modules/
+dist/
+.DS_Store
+.env
+.firebase
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
